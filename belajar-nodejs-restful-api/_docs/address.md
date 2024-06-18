@@ -119,7 +119,7 @@ Response Body Error :
 
 ## List Address API
 
-Endpoint : POST /api/contacts/:contactId/addresses/
+Endpoint : GET /api/contacts/:contactId/addresses/
 
 Headers :
 

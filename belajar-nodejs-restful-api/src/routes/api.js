@@ -1,5 +1,5 @@
 import express from "express";
-import { createContact, getContactById, removeContactById, updateContactById } from "../handler/contact-controller.js";
+import { createContact, getContactById, removeContactById, searchContactById, updateContactById } from "../handler/contact-controller.js";
 import {
   findByUsername,
   logout,
@@ -17,6 +17,7 @@ userRouter.delete("/api/users/logout", logout);
 
 // Contact API
 userRouter.post("/api/contacts", createContact);
+userRouter.get("/api/contacts/", searchContactById);
 userRouter.get("/api/contacts/:contactId", getContactById);
 userRouter.put("/api/contacts/:contactId", updateContactById);
 userRouter.delete("/api/contacts/:contactId", removeContactById);

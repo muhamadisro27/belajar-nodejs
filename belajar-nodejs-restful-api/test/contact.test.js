@@ -6,6 +6,7 @@ import {
   removeTestContact,
   createTestContact,
   getTestContact,
+  createManyTestContacts,
 } from "./test-util.js";
 import { web } from "../src/app/web.js";
 
@@ -211,5 +212,102 @@ describe("DELETE /api/contacts/:contactId", () => {
 
     expect(result.status).toBe(404);
     expect(result.body.errors).toBeDefined();
+  });
+});
+
+describe("GET /api/contacts/", () => {
+  afterEach(async () => {
+    await removeTestContact();
+    await removeTestUser();
+  });
+
+  beforeEach(async () => {
+    await createTestUser();
+    await createManyTestContacts();
+  });
+
+  it("should return contacts without query params", async () => {
+    const result = await supertest(web)
+      .get("/api/contacts/")
+      .set("Authorization", "test")
+    
+      expect(result.status).toBe(200);
+      expect(result.body.data).toBeDefined();
+      expect(result.body.paging).toBeDefined();
+      expect(result.body.data.length).toBe(10);
+      expect(result.body.paging.page).toBe(1);
+      expect(result.body.paging.totalPage).toBe(2);
+      expect(result.body.paging.totalItem).toBe(15);
+  });
+
+  it("should return contacts from page 2", async () => {
+    const result = await supertest(web)
+      .get("/api/contacts/")
+      .query({
+        page: 2,
+      })
+      .set("Authorization", "test")
+
+      expect(result.status).toBe(200);
+      expect(result.body.data).toBeDefined();
+      expect(result.body.paging).toBeDefined();
+      expect(result.body.data.length).toBe(5);
+      expect(result.body.paging.page).toBe(2);
+      expect(result.body.paging.totalPage).toBe(2);
+      expect(result.body.paging.totalItem).toBe(15);
+  });
+
+  it("should return contacts from name", async () => {
+    const result = await supertest(web)
+      .get("/api/contacts/")
+      .query({
+        name: "test1",
+      })
+      .set("Authorization", "test")
+
+      expect(result.status).toBe(200);
+      expect(result.body.data).toBeDefined();
+      expect(result.body.paging).toBeDefined();
+
+      expect(result.body.data.length).toBe(7);
+      expect(result.body.paging.page).toBe(1);
+      expect(result.body.paging.totalPage).toBe(1);
+      expect(result.body.paging.totalItem).toBe(7);
+  });
+
+  it("should return contacts from email", async () => {
+    const result = await supertest(web)
+      .get("/api/contacts/")
+      .query({
+        email: "test1",
+      })
+      .set("Authorization", "test")
+
+      expect(result.status).toBe(200);
+      expect(result.body.data).toBeDefined();
+      expect(result.body.paging).toBeDefined();
+
+      expect(result.body.data.length).toBe(7);
+      expect(result.body.paging.page).toBe(1);
+      expect(result.body.paging.totalPage).toBe(1);
+      expect(result.body.paging.totalItem).toBe(7);
+  });
+
+  it("should return contacts from phone number", async () => {
+    const result = await supertest(web)
+      .get("/api/contacts/")
+      .query({
+        phone: "0851577085971",
+      })
+      .set("Authorization", "test")
+
+      expect(result.status).toBe(200);
+      expect(result.body.data).toBeDefined();
+      expect(result.body.paging).toBeDefined();
+
+      expect(result.body.data.length).toBe(7);
+      expect(result.body.paging.page).toBe(1);
+      expect(result.body.paging.totalPage).toBe(1);
+      expect(result.body.paging.totalItem).toBe(7);
   });
 });

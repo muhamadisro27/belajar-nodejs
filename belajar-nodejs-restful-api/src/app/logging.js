@@ -1,16 +1,4 @@
 import winston from "winston";
-import * as fs from "node:fs";
-
-
-// try {
-//   const dirname = "./src/logs";
-  
-//   if (!fs.existsSync(dirname)) {
-//     fs.mkdirSync(dirname);
-//   }
-// } catch (err) {
-//   console.error(err);
-// }
 
 const logger = winston.createLogger({
   level: "info",

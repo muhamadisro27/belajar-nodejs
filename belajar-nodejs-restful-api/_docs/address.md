@@ -2,7 +2,7 @@
 
 ## Create Address API
 
-Endpoint : POST /api/contacts/:contactId/addresses/:addressId
+Endpoint : POST /api/contacts/:contactId/addresses/
 
 Headers :
 
@@ -12,10 +12,10 @@ Request Body :
 
 ```json
 {
-  "street": "Jalan",
-  "city": "Kota",
-  "province": "Provinsi",
-  "country": "Negara",
+  "street": "Jalan", // optional
+  "city": "Kota", // optional
+  "province": "Provinsi", // optional
+  "country": "Negara", 
   "postalCode": "Kode Pos"
 }
 ```

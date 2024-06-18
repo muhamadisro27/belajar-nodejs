@@ -30,25 +30,15 @@ const removeTestAddresses = async () => {
 const createTestAddress = async () => {
   const testContact = await getTestContact();
 
-  await prismaClient.address.createMany({
-    data: [
-      {
-        street: "Jalan", // optional
-        city: "Kota", // optional
-        province: "Provinsi", // optional
-        country: "Negara",
-        postalCode: "Kode Pos",
-        contactId: testContact.id,
-      },
-      {
-        street: "Jalan", // optional
-        city: "Kota", // optional
-        province: "Provinsi", // optional
-        country: "Negara",
-        postalCode: "Kode Pos",
-        contactId: testContact.id,
-      },
-    ],
+  await prismaClient.address.create({
+    data: {
+      street: "Jalan", // optional
+      city: "Kota", // optional
+      province: "Provinsi", // optional
+      country: "Negara",
+      postalCode: "Kode Pos",
+      contactId: testContact.id,
+    },
   });
 };
 

@@ -16,7 +16,7 @@ const listAddress = async (req, res, next) => {
   }
 };
 
-const getAddress = async (req, res, next) => {
+const getAddressById = async (req, res, next) => {
   try {
     const user = req.user;
     const contactId = req.params.contactId;
@@ -48,4 +48,37 @@ const createAddress = async (req, res, next) => {
   }
 };
 
-export { listAddress, getAddress, createAddress };
+const updateAddressById = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const contactId = req.params.contactId;
+    const addressId = req.params.addressId;
+    const request = req.body;
+
+    const result = await addressService.update(user, contactId, addressId, request);
+
+    res.status(200).json({
+      data: result,
+    });
+  } catch (error) {
+    next(error)
+  }
+}
+
+const removeAddressById = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const contactId = req.params.contactId;
+    const addressId = req.params.addressId;
+
+    await addressService.remove(user, contactId, addressId);
+
+    res.status(200).json({
+      data: "Address is deleted successfully !",
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export { listAddress, getAddressById, createAddress, updateAddressById, removeAddressById };

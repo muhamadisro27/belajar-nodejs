@@ -11,7 +11,13 @@ import {
   logout,
   updateByUsername,
 } from "../handler/user-controller.js";
-import { listAddress, createAddress, getAddress } from "../handler/address-controller.js";
+import {
+  listAddress,
+  createAddress,
+  getAddressById,
+  removeAddressById,
+  updateAddressById,
+} from "../handler/address-controller.js";
 import { authMiddleware } from "../middleware/auth-middleware.js";
 
 const userRouter = express.Router();
@@ -31,7 +37,12 @@ userRouter.delete("/api/contacts/:contactId", removeContactById);
 
 // Address API
 userRouter.get("/api/contacts/:contactId/addresses/", listAddress);
-userRouter.get("/api/contacts/:contactId/addresses/:addressId", getAddress);
+userRouter.get("/api/contacts/:contactId/addresses/:addressId", getAddressById);
 userRouter.post("/api/contacts/:contactId/addresses/", createAddress);
+userRouter.put("/api/contacts/:contactId/addresses/:addressId", updateAddressById)
+userRouter.delete(
+  "/api/contacts/:contactId/addresses/:addressId",
+  removeAddressById
+);
 
 export { userRouter };
